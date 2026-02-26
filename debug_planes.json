@@ -1,0 +1,457 @@
+{
+  "data": [
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": true,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-17",
+        "url": "https://www.virginmobile.co/inicio/bolsas?channel=5",
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "Bolsa de 50 SMS",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "telMovil": {
+          "unidad_medida": "MINUTOS",
+          "um_mismo_proveedor": 0,
+          "um_otro_proveedor": 0,
+          "um_redes_fijas": 0,
+          "tipo_consumo": 2,
+          "sms_mismo_proveedor": 50,
+          "sms_otro_proveedor": 50
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 900420122,
+        "nombre": "VIRGIN"
+      },
+      "logo": "/logos/operadores/virgin.png",
+      "updatedAt": "2026-02-17T05:07:19.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699440a83e8e5d87647a74b8"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": false,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-17",
+        "url": "https://www.virginmobile.co/inicio/bolsas?channel=2",
+        "solo-app": true,
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "Bolsa de Waze de $1.000",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "otras_caracteristicas": {
+          "Redes sociales": [
+            "Waze ilimitado"
+          ]
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21,
+        "apps": {
+          "Waze": "/logos/apps/waze.webp"
+        }
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 900420122,
+        "nombre": "VIRGIN"
+      },
+      "logo": "/logos/operadores/virgin.png",
+      "updatedAt": "2026-02-17T05:07:24.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699440a83e8e5d87647a74bf"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": true,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-17",
+        "url": "https://www.virginmobile.co/inicio/bolsas?channel=3",
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "Bolsa de voz de $1.000",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "telMovil": {
+          "unidad_medida": "MINUTOS",
+          "um_mismo_proveedor": 50,
+          "um_otro_proveedor": 50,
+          "um_redes_fijas": 50,
+          "tipo_consumo": 2,
+          "sms_mismo_proveedor": 0,
+          "sms_otro_proveedor": 0
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 900420122,
+        "nombre": "VIRGIN"
+      },
+      "logo": "/logos/operadores/virgin.png",
+      "updatedAt": "2026-02-17T05:00:50.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699440a83e8e5d87647a7019"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": true,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-24",
+        "url": "https://www.lov.com.co/crc/planesconsolidados.html",
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "LOV 30 MINUTOS",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "telMovil": {
+          "unidad_medida": "SEGUNDOS",
+          "um_mismo_proveedor": 30,
+          "um_otro_proveedor": 30,
+          "um_redes_fijas": 30,
+          "tipo_consumo": 2,
+          "sms_mismo_proveedor": 0,
+          "sms_otro_proveedor": 0
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 901470579,
+        "nombre": "LOV"
+      },
+      "logo": "https://www.lov.com.co/051/static/selfcare/images/lov-img/LOV_logo.svg",
+      "updatedAt": "2026-02-24T05:02:46.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699d7bdc3e8e5d87647f0fab"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": false,
+        "tieneInternetMovil": true,
+        "fecha": "2026-02-24",
+        "url": "https://www.lov.com.co/crc/planesconsolidados.html",
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "PAQUETE LOV DATOS XS",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "internetMovil": {
+          "capacidad_datos": 500
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 901470579,
+        "nombre": "LOV"
+      },
+      "logo": "https://www.lov.com.co/051/static/selfcare/images/lov-img/LOV_logo.svg",
+      "updatedAt": "2026-02-24T05:02:46.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699d7bdc3e8e5d87647f0fa7"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": true,
+        "tieneInternetMovil": true,
+        "fecha": "2026-02-24",
+        "url": "https://www.lov.com.co/crc/planesconsolidados.html",
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "PLAN LOV 1",
+        "valor_iva": 1000,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 30000
+        },
+        "telMovil": {
+          "unidad_medida": "SEGUNDOS",
+          "um_mismo_proveedor": -1,
+          "um_otro_proveedor": 0,
+          "um_redes_fijas": 0,
+          "tipo_consumo": 1,
+          "sms_mismo_proveedor": -1,
+          "sms_otro_proveedor": 0
+        },
+        "internetMovil": {
+          "capacidad_datos": 100
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 901470579,
+        "nombre": "LOV"
+      },
+      "logo": "https://www.lov.com.co/051/static/selfcare/images/lov-img/LOV_logo.svg",
+      "updatedAt": "2026-02-24T05:02:46.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699d7bdc3e8e5d87647f0f91"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": false,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-18",
+        "url": "https://prepago.movistar.co/paquetes",
+        "solo-app": true,
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "Paquete Navega Whatsapp",
+        "valor_iva": 1200,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 36000
+        },
+        "otras_caracteristicas": {
+          "Redes sociales": [
+            "whatsapp"
+          ]
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21,
+        "apps": {
+          "WhatsApp": "/logos/apps/whatsapp.webp"
+        }
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 830122566,
+        "nombre": "MOVISTAR"
+      },
+      "logo": "/logos/operadores/movistar.png",
+      "updatedAt": "2026-02-18T05:07:22.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699593003e8e5d87647b53e6"
+    },
+    {
+      "plan": {
+        "tieneTelefonia": false,
+        "tieneInternetFijo": false,
+        "tieneTelevision": false,
+        "tieneTelefoniaMovil": false,
+        "tieneInternetMovil": false,
+        "fecha": "2026-02-24",
+        "url": "https://ipmobile.co/comparador-de-planes-2/",
+        "solo-app": true,
+        "modalidad": "PRE",
+        "tipo": "Cerrado",
+        "nombre": "IPMOBILE REDES Sociales 1",
+        "valor_iva": 1500,
+        "duracion": {
+          "valor": 1,
+          "unidad": "día",
+          "valorMensual": 45000
+        },
+        "otras_caracteristicas": {
+          "Otras caracteristicas": [
+            "Servicio móvil prestado por SUMA MÓVIL S.A.S"
+          ],
+          "Redes sociales": [
+            "500 MB para redes sociales (WhatsApp, Facebook, Instagram)"
+          ]
+        },
+        "segmentoPlan": {
+          "id": 21,
+          "nombre": "SIN ESTRATIFICAR"
+        },
+        "estrato": 21,
+        "apps": {
+          "Facebook": "/logos/apps/facebook.webp",
+          "WhatsApp": "/logos/apps/whatsapp.webp",
+          "Instagram": "/logos/apps/instagram.webp"
+        }
+      },
+      "version": 4,
+      "proveedor": {
+        "nit": 900245045,
+        "nombre": "IPMOBILE"
+      },
+      "logo": "https://sumamovil.com.co/_img_/operador/logo-ip-mobile.png",
+      "updatedAt": "2026-02-24T05:06:43.000Z",
+      "ubicacion": [
+        {
+          "departamento": {
+            "name": "NACIONAL",
+            "code": 0
+          },
+          "municipio": {
+            "name": "NACIONAL",
+            "cod_dane": 0,
+            "departmentCode": 0
+          }
+        }
+      ],
+      "tipoUsuario": "Ciudadano",
+      "id": "699d7bdc3e8e5d87647f11c4"
+    }
+  ],
+  "total": 14449,
+  "page": 1,
+  "last_page": 1807
+}
