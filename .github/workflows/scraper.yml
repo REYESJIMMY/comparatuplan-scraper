@@ -1,0 +1,29 @@
+name: Scraper CRC Colombia
+
+on:
+  schedule:
+    - cron: "0 11 * * *"  # 6:00 AM Colombia (UTC-5)
+  workflow_dispatch:        # Permite ejecución manual
+
+jobs:
+  scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install aiohttp python-dotenv
+
+      - name: Ejecutar scraper
+        env:
+          SUPABASE_WEBHOOK_URL: ${{ secrets.SUPABASE_WEBHOOK_URL }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: python main.py
