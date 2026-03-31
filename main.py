@@ -1,36 +1,77 @@
+"""
+main.py — ComparaTuPlan.com
+============================
+Orquestador del scraper CRC Colombia.
+Descarga los ~14.000 planes y los sincroniza con Supabase.
+
+Uso:
+  python main.py                    # Scraping completo
+  python main.py --test             # Solo 3 páginas (24 planes)
+  python main.py --pages 50         # Límite personalizado
+
+Programación sugerida (cron / GitHub Actions):
+  0 7 * * *  cd /path/to/scraper && python main.py
+"""
+
 import asyncio
 import logging
+import sys
+import time
+
 from scrapers.crc import scrape_crc
 from webhook_sender import send_plans
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+    ]
 )
 log = logging.getLogger(__name__)
 
-# Tamaño del lote que se envía al webhook por vez
-BATCH_SIZE = 100
 
-async def main():
-    log.info("🚀 Iniciando scraper CRC Colombia...")
+async def main(max_pages: int = None) -> None:
+    t0 = time.time()
+    modo = f"TEST ({max_pages} páginas)" if max_pages else "COMPLETO"
+    log.info(f"🚀 Iniciando scraper CRC Colombia — Modo: {modo}")
 
-    planes = await scrape_crc()  # Todas las páginas
+    # ── 1. Descargar planes ───────────────────────────────────────────────────
+    try:
+        planes = await scrape_crc(max_pages=max_pages)
+    except Exception as e:
+        log.error(f"❌ Error en scraping: {e}")
+        raise
+
     log.info(f"📦 Total planes descargados: {len(planes)}")
 
     if not planes:
-        log.warning("⚠️ No se encontraron planes")
+        log.warning("⚠️ No se encontraron planes — abortando")
         return
 
-    # Enviar en lotes de 100 para no saturar el webhook
-    total_lotes = (len(planes) + BATCH_SIZE - 1) // BATCH_SIZE
-    for i in range(0, len(planes), BATCH_SIZE):
-        lote = planes[i:i + BATCH_SIZE]
-        lote_num = (i // BATCH_SIZE) + 1
-        log.info(f"Enviando lote {lote_num}/{total_lotes} ({len(lote)} planes)...")
-        await send_plans(lote)
+    # ── 2. Enviar a Supabase ──────────────────────────────────────────────────
+    try:
+        await send_plans(planes)
+    except Exception as e:
+        log.error(f"❌ Error enviando a Supabase: {e}")
+        raise
 
-    log.info("✅ Todos los planes enviados a Supabase correctamente")
+    duracion = round(time.time() - t0, 1)
+    log.info(f"✅ Pipeline completado en {duracion}s — {len(planes)} planes sincronizados")
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # Parsear argumentos simples
+    max_pages = None
+
+    if "--test" in sys.argv:
+        max_pages = 3
+        print("🔧 Modo TEST: solo 3 páginas (24 planes)")
+
+    elif "--pages" in sys.argv:
+        idx = sys.argv.index("--pages")
+        if idx + 1 < len(sys.argv):
+            max_pages = int(sys.argv[idx + 1])
+            print(f"🔧 Modo PARCIAL: {max_pages} páginas")
+
+    asyncio.run(main(max_pages=max_pages))

@@ -1,29 +1,58 @@
-name: Scraper CRC Colombia
+name: Scraper CRC — Sincronización Diaria
 
 on:
+  # Ejecutar todos los días a las 7:10 AM hora Colombia (UTC-5 = 12:10 UTC)
   schedule:
-    - cron: "0 11 * * *"  # 6:00 AM Colombia (UTC-5)
-  workflow_dispatch:        # Permite ejecución manual
+    - cron: "10 12 * * *"
+
+  # Permitir ejecución manual desde GitHub Actions
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "Modo de ejecución"
+        required: true
+        default: "completo"
+        type: choice
+        options:
+          - completo
+          - test
 
 jobs:
   scraper:
+    name: Sincronizar planes CRC → Supabase
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-      - name: Checkout código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configurar Python
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: pip
 
       - name: Instalar dependencias
         run: pip install aiohttp python-dotenv
 
-      - name: Ejecutar scraper
-        env:
-          SUPABASE_WEBHOOK_URL: ${{ secrets.SUPABASE_WEBHOOK_URL }}
-          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      - name: Crear .env
+        run: |
+          echo "SUPABASE_WEBHOOK_URL=${{ secrets.SUPABASE_WEBHOOK_URL }}" >> .env
+          echo "SUPABASE_SERVICE_KEY=${{ secrets.SUPABASE_SERVICE_KEY }}" >> .env
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+          echo "WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET }}" >> .env
+
+      - name: Ejecutar scraper completo
+        if: ${{ github.event.inputs.modo != 'test' }}
         run: python main.py
+
+      - name: Ejecutar scraper TEST
+        if: ${{ github.event.inputs.modo == 'test' }}
+        run: python main.py --test
+
+      - name: Notificar resultado
+        if: failure()
+        run: |
+          echo "❌ El scraper falló — revisar logs arriba"
+          exit 1
