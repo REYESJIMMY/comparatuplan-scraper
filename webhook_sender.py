@@ -22,11 +22,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ── Configuración ──────────────────────────────────────────────────────────────
-SUPABASE_URL = os.getenv("SUPABASE_WEBHOOK_URL", "").replace(
-    "/functions/v1/webhook-receiver", ""
-)
+# Lee SUPABASE_URL directamente (sin hacer replace frágil sobre WEBHOOK_URL)
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY  = os.getenv("SUPABASE_SERVICE_KEY", "")
-BATCH_SIZE   = 100   # Planes por request a Supabase
+BATCH_SIZE   = 100
 
 log = logging.getLogger(__name__)
 
@@ -46,6 +45,10 @@ TIPO_MAP = {
     "telefonia_fija": "otro",
 }
 
+TIPOS_VALIDOS = {"internet", "movil", "tv", "paquete", "otro",
+                 "internet_hogar", "triple_play", "duo_internet_tv",
+                 "telefonia_fija"}
+
 HEADERS = {
     "Content-Type":  "application/json",
     "Authorization": f"Bearer {SERVICE_KEY}",
@@ -63,10 +66,6 @@ def preparar(p: dict) -> dict:
     tipo_raw      = p.get("tipo", "otro")
     tipo          = TIPO_MAP.get(tipo_raw, tipo_raw)
 
-    # Validar contra check constraint
-    TIPOS_VALIDOS = {"internet", "movil", "tv", "paquete", "otro",
-                     "internet_hogar", "triple_play", "duo_internet_tv",
-                     "telefonia_fija"}
     if tipo not in TIPOS_VALIDOS:
         tipo = "otro"
 
@@ -82,7 +81,7 @@ def preparar(p: dict) -> dict:
         "precio_mensual":        p.get("precio_mensual"),
         "duracion_valor":        p.get("duracion_valor"),
         "duracion_unidad":       p.get("duracion_unidad"),
-        "velocidad_mbps":        p.get("velocidad_mbps"),   # None — CRC no lo expone
+        "velocidad_mbps":        p.get("velocidad_mbps"),
         "datos_gb":              p.get("datos_gb"),
         "minutos":               p.get("minutos"),
         "canales_tv":            p.get("canales_tv"),
@@ -122,11 +121,12 @@ async def send_plans(planes: list[dict], fuente: str = "CRC") -> None:
     """
     Envía todos los planes a Supabase en lotes de BATCH_SIZE.
     Hace upsert por id_crc (INSERT nuevo / UPDATE existente).
-
-    Args:
-        planes: Lista de dicts producidos por scrapers/crc.py
-        fuente: Etiqueta de la fuente (default "CRC")
     """
+    if not SUPABASE_URL:
+        raise ValueError("❌ Falta SUPABASE_URL en las variables de entorno")
+    if not SERVICE_KEY:
+        raise ValueError("❌ Falta SUPABASE_SERVICE_KEY en las variables de entorno")
+
     t0 = time.time()
 
     # Preparar y deduplicar por id_crc
@@ -141,7 +141,7 @@ async def send_plans(planes: list[dict], fuente: str = "CRC") -> None:
                 seen.add(key)
                 unicos.append(p)
         else:
-            unicos.append(p)  # sin id_crc lo enviamos igual
+            unicos.append(p)
 
     total       = len(unicos)
     total_lotes = (total + BATCH_SIZE - 1) // BATCH_SIZE
@@ -164,11 +164,10 @@ if __name__ == "__main__":
     import asyncio
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
-    # Plan de prueba
     plan_test = [{
-        "id_crc": "test-webhook-001",
+        "id_crc": "test-local-001",
         "operador": "Test Operador",
-        "nombre": "Plan Test Webhook",
+        "nombre": "Plan Test Local",
         "tipo": "internet",
         "modalidad": "pospago",
         "precio": 89900,
