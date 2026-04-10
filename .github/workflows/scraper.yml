@@ -1,4 +1,4 @@
-@'
+$yml = @'
 name: Scraper CRC - Sincronizacion Diaria
 
 on:
@@ -37,10 +37,14 @@ jobs:
         run: pip install aiohttp python-dotenv
 
       - name: Crear .env
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
-          echo "SUPABASE_SERVICE_KEY=${{ secrets.SUPABASE_SERVICE_KEY }}" >> .env
-          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+          echo "SUPABASE_URL=$SUPABASE_URL" > .env
+          echo "SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY" >> .env
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
           cat .env | sed 's/=.*/=***/'
           python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', bool(os.getenv('SUPABASE_URL')))"
 
@@ -57,4 +61,6 @@ jobs:
         run: |
           echo "Scraper fallo - revisar logs arriba"
           exit 1
-'@ | Out-File -Encoding utf8 .github\workflows\scraper.yml
+'@
+
+$yml | Out-File -Encoding utf8 .github\workflows\scraper.yml
