@@ -1,15 +1,13 @@
-name: Scraper CRC — Sincronización Diaria
+@'
+name: Scraper CRC - Sincronizacion Diaria
 
 on:
-  # Todos los días a las 7:10 AM hora Colombia (UTC-5 = 12:10 UTC)
   schedule:
     - cron: "10 12 * * *"
-
-  # Ejecución manual desde GitHub Actions
   workflow_dispatch:
     inputs:
       modo:
-        description: "Modo de ejecución"
+        description: "Modo de ejecucion"
         required: true
         default: "completo"
         type: choice
@@ -19,7 +17,7 @@ on:
 
 jobs:
   scraper:
-    name: Sincronizar planes CRC → Supabase
+    name: Sincronizar planes CRC a Supabase
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -43,20 +41,20 @@ jobs:
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
           echo "SUPABASE_SERVICE_KEY=${{ secrets.SUPABASE_SERVICE_KEY }}" >> .env
           echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
-          echo "--- Contenido .env (sin valores) ---"
           cat .env | sed 's/=.*/=***/'
-          echo "--- Variables de entorno ---"
           python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', bool(os.getenv('SUPABASE_URL')))"
+
       - name: Ejecutar scraper completo
         if: ${{ github.event.inputs.modo != 'test' }}
         run: python main.py
 
-      - name: Ejecutar scraper TEST (3 páginas)
+      - name: Ejecutar scraper TEST
         if: ${{ github.event.inputs.modo == 'test' }}
         run: python main.py --test
 
       - name: Notificar resultado
         if: failure()
         run: |
-          echo "❌ El scraper falló — revisar logs arriba"
+          echo "Scraper fallo - revisar logs arriba"
           exit 1
+'@ | Out-File -Encoding utf8 .github\workflows\scraper.yml
