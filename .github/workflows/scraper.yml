@@ -1,11 +1,11 @@
 name: Scraper CRC — Sincronización Diaria
 
 on:
-  # Ejecutar todos los días a las 7:10 AM hora Colombia (UTC-5 = 12:10 UTC)
+  # Todos los días a las 7:10 AM hora Colombia (UTC-5 = 12:10 UTC)
   schedule:
     - cron: "10 12 * * *"
 
-  # Permitir ejecución manual desde GitHub Actions
+  # Ejecución manual desde GitHub Actions
   workflow_dispatch:
     inputs:
       modo:
@@ -22,6 +22,8 @@ jobs:
     name: Sincronizar planes CRC → Supabase
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout
@@ -38,16 +40,15 @@ jobs:
 
       - name: Crear .env
         run: |
-          echo "SUPABASE_WEBHOOK_URL=${{ secrets.SUPABASE_WEBHOOK_URL }}" >> .env
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
           echo "SUPABASE_SERVICE_KEY=${{ secrets.SUPABASE_SERVICE_KEY }}" >> .env
           echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
-          echo "WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET }}" >> .env
 
       - name: Ejecutar scraper completo
         if: ${{ github.event.inputs.modo != 'test' }}
         run: python main.py
 
-      - name: Ejecutar scraper TEST
+      - name: Ejecutar scraper TEST (3 páginas)
         if: ${{ github.event.inputs.modo == 'test' }}
         run: python main.py --test
 
