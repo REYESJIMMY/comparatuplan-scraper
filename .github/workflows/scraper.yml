@@ -1,4 +1,3 @@
-$yml = @'
 name: Scraper CRC - Sincronizacion Diaria
 
 on:
@@ -7,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "Modo de ejecucion"
+        description: Modo de ejecucion
         required: true
-        default: "completo"
+        default: completo
         type: choice
         options:
           - completo
@@ -42,9 +41,9 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > .env
-          echo "SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY" >> .env
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
+          printf "SUPABASE_URL=%s\n" "$SUPABASE_URL" > .env
+          printf "SUPABASE_SERVICE_KEY=%s\n" "$SUPABASE_SERVICE_KEY" >> .env
+          printf "SUPABASE_ANON_KEY=%s\n" "$SUPABASE_ANON_KEY" >> .env
           cat .env | sed 's/=.*/=***/'
           python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', bool(os.getenv('SUPABASE_URL')))"
 
@@ -58,9 +57,4 @@ jobs:
 
       - name: Notificar resultado
         if: failure()
-        run: |
-          echo "Scraper fallo - revisar logs arriba"
-          exit 1
-'@
-
-$yml | Out-File -Encoding utf8 .github\workflows\scraper.yml
+        run: echo "Scraper fallo - revisar logs"
