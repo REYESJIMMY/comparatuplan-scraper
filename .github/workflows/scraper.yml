@@ -45,14 +45,21 @@ jobs:
           printf "SUPABASE_SERVICE_KEY=%s\n" "$SUPABASE_SERVICE_KEY" >> .env
           printf "SUPABASE_ANON_KEY=%s\n" "$SUPABASE_ANON_KEY" >> .env
           cat .env | sed 's/=.*/=***/'
-          python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', bool(os.getenv('SUPABASE_URL')))"
 
       - name: Ejecutar scraper completo
         if: ${{ github.event.inputs.modo != 'test' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: python main.py
 
       - name: Ejecutar scraper TEST
         if: ${{ github.event.inputs.modo == 'test' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: python main.py --test
 
       - name: Notificar resultado
