@@ -43,7 +43,10 @@ jobs:
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
           echo "SUPABASE_SERVICE_KEY=${{ secrets.SUPABASE_SERVICE_KEY }}" >> .env
           echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
-
+          echo "--- Contenido .env (sin valores) ---"
+          cat .env | sed 's/=.*/=***/'
+          echo "--- Variables de entorno ---"
+          python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', bool(os.getenv('SUPABASE_URL')))"
       - name: Ejecutar scraper completo
         if: ${{ github.event.inputs.modo != 'test' }}
         run: python main.py
