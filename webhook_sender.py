@@ -19,7 +19,7 @@ import time
 import aiohttp
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=False)
 
 # ── Configuración ──────────────────────────────────────────────────────────────
 # Lee SUPABASE_URL directamente (sin hacer replace frágil sobre WEBHOOK_URL)
