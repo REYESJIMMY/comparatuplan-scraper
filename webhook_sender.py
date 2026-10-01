@@ -149,15 +149,21 @@ async def send_plans(planes: list[dict], fuente: str = "CRC") -> None:
 
     log.info(f"🚀 Enviando {total} planes únicos en {total_lotes} lotes a Supabase...")
 
-    async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session:
         for i in range(0, total, BATCH_SIZE):
             lote_num = (i // BATCH_SIZE) + 1
             lote     = unicos[i:i + BATCH_SIZE]
             total_ins += await _enviar_lote(session, lote, lote_num, total_lotes)
 
+        # Refrescar la vista materializada para que el sitio vea los datos nuevos.
+        # Si esto falla, dejamos que la excepción se propague: los planes en la
+        # tabla `planes` sí quedaron actualizados, pero el sitio seguiría mostrando
+        # datos viejos hasta que se refresque — mejor que el job falle visiblemente
+        # (GitHub Actions te notifica) a que pase desapercibido.
+        await _refrescar_vista(session)
+
     duracion = round(time.time() - t0, 1)
     log.info(f"✅ Completado en {duracion}s — {total_ins} planes enviados a Supabase")
-
 
 # ── Test local ─────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
