@@ -149,7 +149,7 @@ async def send_plans(planes: list[dict], fuente: str = "CRC") -> None:
 
     log.info(f"🚀 Enviando {total} planes únicos en {total_lotes} lotes a Supabase...")
 
-        async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession() as session:
         for i in range(0, total, BATCH_SIZE):
             lote_num = (i // BATCH_SIZE) + 1
             lote     = unicos[i:i + BATCH_SIZE]
@@ -164,7 +164,6 @@ async def send_plans(planes: list[dict], fuente: str = "CRC") -> None:
 
     duracion = round(time.time() - t0, 1)
     log.info(f"✅ Completado en {duracion}s — {total_ins} planes enviados a Supabase")
-
 # ── Test local ─────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import asyncio
